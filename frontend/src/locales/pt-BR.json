@@ -1,0 +1,121 @@
+{
+  "app": {
+    "brand": "MyNote",
+    "logout": "Sair"
+  },
+  "common": {
+    "cancel": "Cancelar",
+    "confirm": "Confirmar",
+    "close": "Fechar"
+  },
+  "auth": {
+    "validation": {
+      "name_required": "Nome é obrigatório",
+      "name_too_short": "Nome deve ter no mínimo 3 caracteres",
+      "name_too_long": "Nome deve ter no máximo 100 caracteres",
+      "email_required": "Email é obrigatório",
+      "email_invalid": "Email inválido",
+      "password_required": "Senha é obrigatória",
+      "password_min_length": "Senha deve ter no mínimo 8 caracteres",
+      "password_max_length": "Senha deve ter no máximo 32 caracteres",
+      "password_mismatch": "As senhas não coincidem",
+      "password_complexity": "Senha deve conter letra maiúscula, número e caractere especial (!{'@'}#$%^&*)"
+    },
+    "login": {
+      "email_label": "Email",
+      "email_placeholder": "seu{'@'}email.com",
+      "password_label": "Senha",
+      "password_placeholder": "••••••••",
+      "submit": "Entrar",
+      "forgot_password": "Esqueceu a senha?",
+      "create_account": "Criar conta"
+    },
+    "register": {
+      "name_label": "Nome",
+      "name_placeholder": "Seu nome",
+      "email_label": "Email",
+      "email_placeholder": "seu{'@'}email.com",
+      "password_label": "Senha",
+      "password_placeholder": "Mínimo 8 caracteres",
+      "confirm_label": "Confirmar senha",
+      "confirm_placeholder": "••••••••",
+      "submit": "Criar conta",
+      "login_link": "Já tem conta? Entrar"
+    },
+    "forgot_password": {
+      "title": "Recuperar senha",
+      "email_label": "Email",
+      "email_placeholder": "seu{'@'}email.com",
+      "submit": "Enviar instruções",
+      "back_to_login": "← Voltar ao login",
+      "error": "Ocorreu um erro. Tente novamente."
+    },
+    "reset_password": {
+      "title": "Nova senha",
+      "invalid_link": "Link inválido ou expirado. Solicite uma nova recuperação de senha.",
+      "request_new": "Solicitar nova recuperação",
+      "go_to_login": "Ir para o login",
+      "password_label": "Nova senha",
+      "password_placeholder": "Mínimo 8 caracteres",
+      "confirm_label": "Confirmar nova senha",
+      "confirm_placeholder": "••••••••",
+      "submit": "Redefinir senha",
+      "error": "Link inválido ou expirado. Solicite uma nova recuperação."
+    },
+    "unexpected_error": "Ocorreu um erro inesperado."
+  },
+  "notes": {
+    "list": {
+      "search_placeholder": "Buscar notas...",
+      "new_button": "Nova nota",
+      "empty_search": "Nenhuma nota encontrada.",
+      "empty_state": "Você ainda não tem notas.",
+      "create_first": "Criar primeira nota →",
+      "delete_title": "Excluir nota",
+      "delete_confirm": "Excluir",
+      "delete_description": "Tem certeza que deseja excluir \"{title}\"? Esta ação não pode ser desfeita.",
+      "delete_error": "Não foi possível excluir a nota. Tente novamente."
+    },
+    "new": {
+      "back": "← Notas",
+      "title": "Nova nota",
+      "submit": "Criar nota",
+      "error": "Não foi possível criar a nota. Tente novamente."
+    },
+    "edit": {
+      "back": "← Notas",
+      "back_on_error": "← Voltar para notas",
+      "title": "Editar nota",
+      "submit": "Salvar alterações",
+      "not_found": "Nota não encontrada.",
+      "error": "Não foi possível salvar. Tente novamente."
+    },
+    "form": {
+      "title_label": "Título",
+      "title_placeholder": "Título da nota",
+      "content_label": "Conteúdo",
+      "content_placeholder": "Escreva sua nota aqui...",
+      "cancel": "Cancelar",
+      "save": "Salvar"
+    },
+    "validation": {
+      "title_required": "Título é obrigatório",
+      "title_min": "Título deve ter no mínimo 2 caracteres",
+      "title_max": "Título deve ter no máximo 100 caracteres",
+      "content_max": "Conteúdo deve ter no máximo 600 caracteres"
+    },
+    "card": {
+      "no_content": "Sem conteúdo",
+      "edit": "Editar",
+      "delete": "Excluir"
+    },
+    "unexpected_error": "Ocorreu um erro inesperado."
+  },
+  "pagination": {
+    "label": "Paginação",
+    "previous": "← Anterior",
+    "next": "Próxima →",
+    "info": "Página {current} de {total}",
+    "count": "{count} nota | {count} notas"
+  }
+}

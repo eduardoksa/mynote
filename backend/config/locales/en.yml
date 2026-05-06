@@ -1,0 +1,61 @@
+en:
+  auth:
+    token_missing: "Missing token"
+    token_expired: "Expired token"
+    token_invalid: "Invalid token"
+    user_not_found: "User not found"
+    invalid_credentials: "Invalid email or password"
+    invalid_refresh_token: "Invalid or expired refresh token"
+    password_reset:
+      sent: "If this email is registered, you will receive instructions shortly."
+      invalid_token: "Invalid or expired token"
+      success: "Password updated successfully."
+  notes:
+    not_found: "Note not found"
+  rack_attack:
+    too_many_requests: "Too many requests. Please try again later."
+  errors:
+    internal_server_error: "An internal error occurred. Please try again later."
+
+  user_mailer:
+    password_reset:
+      subject: "Password reset - MyNote"
+      title: "Password reset"
+      greeting: "Hello, %{name}!"
+      body: "We received a request to reset the password for your MyNote account."
+      action: "Reset my password"
+      expiry: "This link expires in <strong>15 minutes</strong>."
+      disclaimer: "If you didn't request a password reset, ignore this email — your password remains the same."
+      expiry_text: "This link expires in 15 minutes."
+      disclaimer_text: "If you didn't request a password reset, ignore this email."
+
+  activerecord:
+    models:
+      user: "User"
+      note: "Note"
+    attributes:
+      user:
+        name: "Name"
+        email: "Email"
+        password: "Password"
+        password_confirmation: "Password confirmation"
+      note:
+        title: "Title"
+        content: "Content"
+    errors:
+      messages:
+        blank: "can't be blank"
+        taken: "has already been taken"
+        invalid: "is invalid"
+        too_short:
+          one: "is too short (minimum is %{count} character)"
+          other: "is too short (minimum is %{count} characters)"
+        too_long:
+          one: "is too long (maximum is %{count} character)"
+          other: "is too long (maximum is %{count} characters)"
+        confirmation: "doesn't match %{attribute}"
+      models:
+        user:
+          attributes:
+            password:
+              complexity: "must contain at least one uppercase letter, one number, and one special character (!@#$%^&*)"

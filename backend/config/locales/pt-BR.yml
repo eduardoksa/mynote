@@ -1,0 +1,64 @@
+pt-BR:
+  auth:
+    token_missing: "Token ausente"
+    token_expired: "Token expirado"
+    token_invalid: "Token inválido"
+    user_not_found: "Usuário não encontrado"
+    invalid_credentials: "Email ou senha inválidos"
+    invalid_refresh_token: "Refresh token inválido ou expirado"
+    password_reset:
+      sent: "Se o email estiver cadastrado, você receberá as instruções em breve."
+      invalid_token: "Token inválido ou expirado"
+      success: "Senha atualizada com sucesso."
+  notes:
+    not_found: "Nota não encontrada"
+  rack_attack:
+    too_many_requests: "Muitas tentativas. Tente novamente mais tarde."
+  errors:
+    internal_server_error: "Ocorreu um erro interno. Tente novamente mais tarde."
+
+  user_mailer:
+    password_reset:
+      subject: "Redefinição de senha - MyNote"
+      title: "Redefinição de senha"
+      greeting: "Olá, %{name}!"
+      body: "Recebemos uma solicitação para redefinir a senha da sua conta no MyNote."
+      action: "Redefinir minha senha"
+      expiry: "Este link expira em <strong>15 minutos</strong>."
+      disclaimer: "Se você não solicitou a redefinição, ignore este email — sua senha permanece a mesma."
+      expiry_text: "Este link expira em 15 minutos."
+      disclaimer_text: "Se você não solicitou a redefinição, ignore este email."
+
+  activerecord:
+    models:
+      user: "Usuário"
+      note: "Nota"
+    attributes:
+      user:
+        name: "Nome"
+        email: "Email"
+        password: "Senha"
+        password_confirmation: "Confirmação de senha"
+      note:
+        title: "Título"
+        content: "Conteúdo"
+    errors:
+      messages:
+        blank: "não pode ficar em branco"
+        taken: "já está em uso"
+        invalid: "é inválido"
+        too_short:
+          one: "é muito curto (mínimo de %{count} caractere)"
+          other: "é muito curto (mínimo de %{count} caracteres)"
+        too_long:
+          one: "é muito longo (máximo de %{count} caractere)"
+          other: "é muito longo (máximo de %{count} caracteres)"
+        confirmation: "não é igual a %{attribute}"
+      models:
+        user:
+          attributes:
+            password:
+              too_short:
+                one: "é muito curto (mínimo de %{count} caractere)"
+                other: "é muito curto (mínimo de %{count} caracteres)"
+              complexity: "deve conter ao menos uma letra maiúscula, um número e um caractere especial (!@#$%^&*)"
