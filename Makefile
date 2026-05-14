@@ -11,7 +11,8 @@ FE        = $(DC) exec frontend
         db-create db-migrate db-seed db-reset \
         test rubocop rubocop-fix brakeman bundle-audit \
         console bash \
-        fe-logs fe-bash fe-typecheck fe-test fe-test-watch fe-e2e
+        fe-logs fe-bash fe-typecheck fe-test fe-test-watch fe-e2e \
+        load-smoke load-test load-stress load-soak load
 
 help: ## Lista todos os comandos disponíveis
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | \
@@ -103,3 +104,21 @@ fe-test-watch: ## Roda os testes do frontend em modo watch
 
 fe-e2e: ## Roda os testes E2E com Playwright (requer `make up`)
 	@$(DC) --profile e2e run --rm e2e sh -c "npm install && npx playwright test"
+
+# ── Testes de carga ───────────────────────────────────────────────────────────
+
+LOAD_DC = $(DC) -f docker-compose.yml -f docker-compose.load-test.yml
+
+load-smoke: ## Smoke test: 2 VUs por 60s — sanidade básica (requer `make up`)
+	@$(LOAD_DC) run --rm k6 run /scripts/smoke.js
+
+load-test: ## Load test: 50 VUs por 5min — carga típica (requer `make up`)
+	@$(LOAD_DC) run --rm k6 run /scripts/load.js
+
+load-stress: ## Stress test: ramp-up 0→200 VUs por 9min — ponto de ruptura (requer `make up`)
+	@$(LOAD_DC) run --rm k6 run /scripts/stress.js
+
+load-soak: ## Soak test: 30 VUs por 30min — resistência e memory leaks (requer `make up`)
+	@$(LOAD_DC) run --rm k6 run /scripts/soak.js
+
+load: load-smoke load-test load-stress load-soak ## Roda todos os testes de carga em sequência: smoke → load → stress → soak (requer `make up`)
