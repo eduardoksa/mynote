@@ -1,11 +1,22 @@
+require "ipaddr"
+
+PRIVATE_IP_RANGES = [
+  IPAddr.new("127.0.0.0/8"),
+  IPAddr.new("::1/128"),
+  IPAddr.new("10.0.0.0/8"),
+  IPAddr.new("172.16.0.0/12"),
+  IPAddr.new("192.168.0.0/16"),
+].freeze
+
 class Rack::Attack
   # Isenta redes privadas/Docker do rate limiting (usado em testes E2E)
   safelist("allow-local-network") do |req|
-    req.ip == "127.0.0.1" ||
-      req.ip == "::1" ||
-      req.ip.start_with?("172.") ||
-      req.ip.start_with?("10.")  ||
-      req.ip.start_with?("192.168.")
+    begin
+      ip = IPAddr.new(req.ip)
+      PRIVATE_IP_RANGES.any? { |range| range.include?(ip) }
+    rescue IPAddr::InvalidAddressError
+      false
+    end
   end
 
   # Limita tentativas de login: 5 por IP a cada 20 segundos
