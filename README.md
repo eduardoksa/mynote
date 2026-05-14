@@ -78,15 +78,15 @@ O pipeline roda automaticamente em push e pull requests para `main`, executando 
 
 ## Decisões técnicas
 
-Esta seção registra as principais escolhas arquiteturais, seus tradeoffs, riscos e limites — para deixar explícito o racional por trás do que foi construído.
+Esta seção registra as principais escolhas arquiteturais, para deixar explícito o racional por trás do que foi construído.
 
 ### Rails API-only
 
-- **Racional:** Separação clara de responsabilidades; o backend vira um contrato estável que pode ser consumido por qualquer cliente (web, mobile, CLI).
+- Separação clara de responsabilidades; o backend vira um contrato estável que pode ser consumido por qualquer cliente (web, mobile, CLI).
 
 ### Autenticação JWT + Refresh Token
 
-- **Racional:** Stateless por design; escalabilidade horizontal sem precisar de session store compartilhada entre instâncias.
+- Stateless por design; escalabilidade horizontal sem precisar de session store compartilhada entre instâncias.
 
 ### Armazenamento de tokens no cliente
 
@@ -97,12 +97,12 @@ Esta seção registra as principais escolhas arquiteturais, seus tradeoffs, risc
 ### Fila de refresh em 401 paralelos
 
 - Se múltiplas requisições expiram ao mesmo tempo, todas fazem fila e aguardam **um único** pedido de refresh, depois reenviam em paralelo.
-- **Racional:** Evita thundering herd de `POST /auth/refresh` que causaria race condition e invalidaria tokens válidos.
+- Evita thundering herd de `POST /auth/refresh` que causaria race condition e invalidaria tokens válidos.
 
 ### Sincronização de logout multi-tab
 
 - Um logout em qualquer aba dispara `window.storage` event nas demais, que limpam o estado de autenticação imediatamente.
-- **Racional:** Sem isso, abas abertas continuariam exibindo conteúdo autenticado após logout — inconsistência visível ao usuário.
+- Sem isso, abas abertas continuariam exibindo conteúdo autenticado após logout — inconsistência visível ao usuário.
 
 ### Rate limiting por camada (Rack::Attack)
 
@@ -120,13 +120,13 @@ Esta seção registra as principais escolhas arquiteturais, seus tradeoffs, risc
 ### Rotação de refresh token (uso único)
 
 - A cada chamada a `POST /auth/refresh`, o token anterior é **revogado** e um novo é emitido.
-- **Racional:** Se um atacante roubar o refresh token e usá-lo primeiro, o próximo refresh legítimo do usuário falha — a rotação funciona como sensor de roubo. Sem rotação, um token roubado seria válido por 30 dias sem qualquer alarme.
+- Se um atacante roubar o refresh token e usá-lo primeiro, o próximo refresh legítimo do usuário falha — a rotação funciona como sensor de roubo. Sem rotação, um token roubado seria válido por 30 dias sem qualquer alarme.
 
 ### Prevenção de enumeração de usuários
 
 - **Login:** retorna a mesma mensagem genérica (`invalid_credentials`) seja qual for a causa — e-mail inexistente ou senha errada.
 - **Reset de senha:** sempre responde HTTP 200, independente de o e-mail estar cadastrado ou não.
-- **Racional:** Respostas distintas permitiriam a um atacante confirmar quais e-mails existem na base sem precisar de senha.
+- Respostas distintas permitiriam a um atacante confirmar quais e-mails existem na base sem precisar de senha.
 
 ### Segurança do fluxo de reset de senha
 
@@ -139,32 +139,32 @@ Esta seção registra as principais escolhas arquiteturais, seus tradeoffs, risc
 - Política aplicada: `default_src :none`, `script_src :self`, `connect_src :self`, `frame_ancestors :none`.
 - `frame_ancestors :none` bloqueia clickjacking — a app não pode ser embutida em nenhum iframe.
 - Modo **enforce** (`content_security_policy_report_only = false`): violações são bloqueadas ativamente, não apenas logadas.
-- **Racional:** Reforça a mitigação de XSS para o refresh token em `localStorage`; sem CSP efetiva, scripts injetados poderiam ler o storage.
+- Reforça a mitigação de XSS para o refresh token em `localStorage`; sem CSP efetiva, scripts injetados poderiam ler o storage.
 
 ### HTTPS e validação de host em produção
 
 - `config.force_ssl = true` redireciona HTTP → HTTPS e envia o header `Strict-Transport-Security` automaticamente.
 - `config.assume_ssl = true` confia no `X-Forwarded-Proto` do reverse proxy (Nginx/Caddy), evitando loop de redirect.
 - `config.hosts` restrito via variável `ALLOWED_HOST` — qualquer request com Host header diferente é rejeitado com 403.
-- **Racional:** Previne ataques de DNS rebinding e Host header injection; sem isso, um atacante pode forjar o host para gerar links maliciosos (password reset, por exemplo).
+- Previne ataques de DNS rebinding e Host header injection; sem isso, um atacante pode forjar o host para gerar links maliciosos (password reset, por exemplo).
 
 ### Filtragem de dados sensíveis nos logs
 
 - Parâmetros contendo `:passw`, `:email`, `:secret`, `:token`, `:_key`, `:crypt`, `:salt` e similares são substituídos por `[FILTERED]` nos logs de request.
 - Atributos `:token` e `:password_digest` também são mascarados nas queries SQL do verbose log.
-- **Racional:** Logs são acessados por mais pessoas e sistemas que o banco de dados; vazar tokens nos logs anularia a proteção do digest no banco.
+- Logs são acessados por mais pessoas e sistemas que o banco de dados; vazar tokens nos logs anularia a proteção do digest no banco.
 
 ### Fila com Solid Queue
 
-- **Racional:** Nativo do Rails 8; sem gem extra, sem adapter, integração direta com Active Record e sem dependência de thread pool separado.
+- Nativo do Rails 8; sem gem extra, sem adapter, integração direta com Active Record e sem dependência de thread pool separado.
 
 ### PostgreSQL 18
 
-- **Racional:** Versão mais recente com melhorias de performance, melhor suporte a JSON e novos tipos de dados nativos.
+- Versão mais recente com melhorias de performance, melhor suporte a JSON e novos tipos de dados nativos.
 
 ### Versionamento de API (`/api/v1`)
 
-- **Racional:** Permite evoluir a API sem quebrar contratos com clientes existentes; boa prática desde o início evita refatoração dolorosa depois.
+- Permite evoluir a API sem quebrar contratos com clientes existentes; boa prática desde o início evita refatoração dolorosa depois.
 
 ## Estratégia de testes
 
